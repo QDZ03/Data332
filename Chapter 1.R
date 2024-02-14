@@ -56,7 +56,7 @@ die / 2
 die * die
 
 #Vector recycling
-die + 1:2
+die + 1:2 # 1+1, 2+2, recycle, 3+1, 4+2, recycle, 5+1, 6+2
 
 die + 1:4
 
