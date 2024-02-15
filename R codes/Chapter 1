@@ -1,4 +1,8 @@
 # Chapter 1 Exercises
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(fansi)
 
 # Simple Arithmetic Function
 1 + 1
