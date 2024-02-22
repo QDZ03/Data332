@@ -62,4 +62,7 @@ miles_per_gallon <- round(total_miles_driven / total_gallons_consumed, 3)
 cost_per_mile <- round(total_expense / total_miles_driven, 3)
 
 #Split Location to Warehouse and City_State
-df[c('warehouse', 'city_state')] <- str_split_fixed(df$Starting.Location, ',', 2)
+df[c('starting_warehouse', 'starting_city_state')] <- str_split_fixed(df$Starting.Location, ',', 2)
+
+#Split Delivery Location to Warehouse and City_state
+df[c('deliveery_warehouse', 'delivery_city_state')] <- str_split_fixed(df$Delivery.Location, ',', 2)
