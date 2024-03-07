@@ -1,1 +1,1 @@
-<img src="C:/Users/quang/Downloads/Documents/Data 332/R-programming/Graphics for Student data/Students' Titles.png" width="250" height="400">
+<img width="692" alt="Students' Titles" src="https://github.com/QDZ03/Data332/assets/159860533/cc69df31-ab26-444e-808a-a8ae650948f2">
