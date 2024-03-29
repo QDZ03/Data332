@@ -69,7 +69,7 @@ tidy_complaints %>%
 ```
 <img width="555" alt="Complaints word bubble" src="https://github.com/QDZ03/Data332/assets/159860533/424d73bd-4b6e-435f-ba83-ddd849175ac5">
 
-#Conclusion
+# Conclusion
 
 1. With this data, customers can realize that big companies have lots of problems, and they can shift to big companies with low negative comments.
 2. Companies with high negative complaints should consider and fix their problems in time.   
