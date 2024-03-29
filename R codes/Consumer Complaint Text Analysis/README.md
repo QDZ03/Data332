@@ -8,8 +8,12 @@
 
 ## Data Cleaning
 <p>Consumer complaints narrative: Clearing the blank complaints and turning those to a row of words to later inner join sentiment analysis</p>
-<code>
-df <- df %>%
+    <html>
+      <head>
+        df <- df %>%
   filter(Consumer.complaint.narrative != "")
 tidy_complaints <- df %>%
-  unnest_tokens(word, Consumer.complaint.narrative) </code>
+  unnest_tokens(word, Consumer.complaint.narrative)
+      </head>
+    </html>
+
