@@ -33,8 +33,8 @@ negative_company <- tidy_complaints %>%
 
 top_20_negative_company <- head(negative_company,20)
 ```
-<img width="555" alt="Top 20 Companies with negative complaints" src="https://github.com/QDZ03/Data332/assets/159860533/bc0b72ef-85ac-4cfe-9c4d-8fbab6c72f54">
+<img width="555" alt="Top 20 companies with negative customer complaints" src="https://github.com/QDZ03/Data332/assets/159860533/7d0a52be-3ab9-4803-a673-385a2aff4b27">
 
-- The chart
+- Most negative complaints are in big companies such as Equifax, Wells Fargo, and Bank of America, with over 20000 negative words
 
 
