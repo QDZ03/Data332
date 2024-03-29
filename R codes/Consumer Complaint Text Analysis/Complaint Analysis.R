@@ -31,20 +31,20 @@ top_20_negative_company <- head(negative_company,20)
 #Plot the data
 ggplot(data = top_20_negative_company, aes(x = n, y = reorder(Company, n))) +
   geom_bar(stat = "identity", fill = "blue") + 
-  labs(title = "Top 20 companies with neagative complaints", 
+  labs(title = "Top 20 companies with negative complaints", 
        x = "Negative complaints", y = "Company") +
   theme_minimal()
 
 #Get negative nrc sentiment words using 
-bing_word_counts <- tidy_complaints %>%
+nrc_word_counts <- tidy_complaints %>%
   inner_join(get_sentiments("nrc")) %>% 
   filter(sentiment == "negative") %>%
   count(word, sentiment, sort = TRUE) %>%
   ungroup()
-bing_word_counts
+nrc_word_counts
 
 #Find the most negative words
-bing_word_counts %>%
+nrc_word_counts %>%
   group_by(sentiment) %>%
   slice_max(n, n = 10) %>% 
   ungroup() %>%
@@ -52,12 +52,12 @@ bing_word_counts %>%
   ggplot(aes(n, word, fill = sentiment)) +
   geom_col(show.legend = FALSE) +
   facet_wrap(~sentiment, scales = "free_y") +
-  labs(x = "Contribution to sentiment",
+  labs(title = "Top 10 negative words from customer complaints", x = "Contribution to sentiment",
        y = NULL)
 
 #Word bubbles
 tidy_complaints %>%
-  inner_join(get_sentiments("bing")) %>%
+  inner_join(get_sentiments("nrc")) %>%
   filter(sentiment == "negative") %>%
   count(word, sentiment) %>%
   with(wordcloud(word, n, max.words = 100))
