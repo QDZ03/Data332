@@ -1,6 +1,6 @@
 > # Consumer Complaints
 > ## Contributor
-> <p> Quang Nguyen </p>
+ <p> Quang Nguyen </p>
 
 > ## Introduction
 > <p>I will analyze the consumer complaints narrative to identify which companies 
