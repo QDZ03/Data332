@@ -1,4 +1,4 @@
 # Consumer Complaints
 <br>
-<p>## Contributor</p>
+## Contributor
 <p>Quang Nguyen</p>
