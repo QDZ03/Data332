@@ -1,12 +1,12 @@
  # Consumer Complaints
-> ## Contributor
+ ## Contributor
  <p> Quang Nguyen </p>
 
-> ## Introduction
+ ## Introduction
 > <p>I will analyze the consumer complaints narrative to identify which companies 
   have the most negative comments and solutions to solve for those </p>
 
-> ## Data Cleaning
+ ## Data Cleaning
 > <p>Consumer complaints narrative: Clearing the blank complaints and turning those into a row of words to later inner join sentiment analysis</p>
  
 
