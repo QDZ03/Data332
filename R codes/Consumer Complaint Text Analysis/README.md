@@ -52,6 +52,7 @@ nrc_word_counts <- tidy_complaints %>%
 nrc_word_counts
 ```
 <img width="555" alt="Top 10 negative words from customer complaints" src="https://github.com/QDZ03/Data332/assets/159860533/1f52cc55-5536-4777-b2a7-0dc035855c3b">
+
 - Most people have complaints about late debt or payment, dispute calls, and fraud when complaining with those companies.
 
 ### 3. Word bubble of negative complaints
