@@ -91,6 +91,7 @@ if (input$plot_type == "Density Plot of MPH by Weather") {
     }
 ```
 <img width="556" alt="Boxplot of MPH by Hour" src="https://github.com/QDZ03/Data332/assets/159860533/e67768da-2b0c-4095-ac78-52a7d6b62c47">
+
 - We can see that there is not much difference in the speed on a sunny day, as their median is around 32 MPH.
 - This is reasonable because both of the data collected in casual time when is not rush or deserted hours 
 - With the 30 MPH speed limit, this is a success for radar detectors.
