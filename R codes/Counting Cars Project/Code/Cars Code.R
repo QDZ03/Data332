@@ -15,16 +15,16 @@ df_cars$Hour <- hour(df_cars$Time)
 
 # Define UI
 ui <- fluidPage(
-  titlePanel("Counting Cars Analysis"),
+  titlePanel("Counting Cars Analysis"), #Set the Title 
   
   sidebarLayout(
-    sidebarPanel(
+    sidebarPanel( #Users can select the plot they want to see
       # Input for selecting the plot
       selectInput("plot_type", "Choose a plot:",
                   choices = c("Density Plot of MPH by Weather", "Boxplot of MPH by Hour"))
     ),
     
-    mainPanel(
+    mainPanel( #Main panel where the plot will be display
       plotOutput("plot")
     )
   )
@@ -34,22 +34,24 @@ ui <- fluidPage(
 server <- function(input, output) {
   
   output$plot <- renderPlot({
-    # Density Plot of MPH by Weather Condition
+    # Check if the user selected "Density Plot of MPH by Weather"
     if (input$plot_type == "Density Plot of MPH by Weather") {
+      # Create a density plot of MPH by Weather
       ggplot(df_cars, aes(x = MPH, fill = Weather)) +
-        geom_density(alpha = 0.5) +
+        geom_density(alpha = 0.5) + # Add density plot with transparency
         labs(title = "Density Plot of MPH by Weather Condition",
              x = "MPH", y = "Density", fill = "Weather") +
         theme_minimal()
     }
     
-    # Boxplot of MPH by Hour
+    # Check if the user selected "Boxplot of MPH by Hour"
     else if (input$plot_type == "Boxplot of MPH by Hour") {
+      # Create a boxplot of MPH by Hour with weather grouping
       ggplot(df_cars, aes(x = as.factor(Hour), y = MPH)) +
-        geom_boxplot(aes(fill = Weather)) +
-        stat_summary(fun = mean, geom = "point", shape = 23, size = 4, color = "black") +
-        stat_summary(fun = mean, geom = "text", aes(label = round(..y.., digits = 2)), vjust = -1) +
-        stat_summary(fun = median, geom = "text", aes(label = round(after_stat(y), digits = 2)), vjust = 1.5, color = "blue") +
+        geom_boxplot(aes(fill = Weather)) + # Add boxplot with weather grouping   
+        stat_summary(fun = mean, geom = "point", shape = 23, size = 4, color = "black") + # Add mean points
+        stat_summary(fun = mean, geom = "text", aes(label = round(after_stat(y), digits = 2)), vjust = -1) + # Add mean text label
+        stat_summary(fun = median, geom = "text", aes(label = round(after_stat(y), digits = 2)), vjust = 1.5, color = "blue") + # Add median text label
         labs(title = "Boxplot of MPH by Hour",
              x = "Hour", y = "MPH", fill = "Weather") +
         theme_minimal() +
