@@ -1,79 +1,103 @@
  # Consumer Complaints
  ## Contributor
- <p> Quang Nguyen </p>
+ <p> Quang Nguyen, Bibhuti Thapa, Emma Kidane </p>
 
  ## Introduction
- <p>I will analyze the consumer complaints narrative to identify which companies 
-  have the most negative comments and solutions to solve those. </p>
+ <p>I will analyze the cars' speed in different weather and times of the day to see their relationship. </p>
 
+ ## Install Packages and Library
+```
+library(shiny)
+library(ggplot2)
+library(readxl)
+library(dplyr)
+library(lubridate)
+```
  ## Data Cleaning
- <p>Consumer complaints narrative: Clearing the blank complaints and turning those into a row of words to later inner join sentiment analysis.</p>
- 
-```
-df <- df %>%
-  filter(Consumer.complaint.narrative != "")
+ <p>Counting Cars Analysis: Clearing the blank columns and changing the time format for better analysis.</p>
 
-tidy_complaints <- df %>%
-  unnest_tokens(word, Consumer.complaint.narrative)
 ```
+df_cars <- counting_cars[, c("Date", "MPH", "Time", "Temp", "Weather")]
+df_cars$Time <- as.POSIXct(df_cars$Time, format = "%H:%M:%S")
+df_cars$Hour <- hour(df_cars$Time)
+```
+## Shiny App
+<p>I create a shiny app by defining UI and defining Server to publish my visualization on shinyapps.io</p>
+
+```
+ui <- fluidPage(
+  titlePanel("Counting Cars Analysis"), #Set the Title 
+  
+  sidebarLayout(
+    sidebarPanel( #Users can select the plot they want to see
+      # Input for selecting the plot
+      selectInput("plot_type", "Choose a plot:",
+                  choices = c("Density Plot of MPH by Weather", "Boxplot of MPH by Hour"))
+    ),
+    
+    mainPanel( #Main panel where the plot will be display
+      plotOutput("plot")
+    )
+  )
+)
+server <- function(input, output) {
+  output$plot <- renderPlot({
+  })
+}
+```
+
 ## Data Analysis
-### 1. Top 20 companies with negative complaints
+### 1. Density of Car's Speed by Weather Condition
 
-<p>With numerous customer complaints, the first step is to identify which companies received the most negative complaints.</p>
+<p>With numerous cars' speeds, we need to identify if the weather has any impact on driving conditions .</p>
 
-<p> To do this, I create a data frame that groups by Company and then inner join "bing," filter with negative sentiment, and count the number of words. After that, I arranged the data and picked the top 20 companies.  </p>
-
-```
-negative_company <- tidy_complaints %>%
-  group_by(Company) %>%
-  inner_join(get_sentiments("bing")) %>%
-  filter(sentiment == "negative") %>%
-  count(Company, sentiment) %>%
-  arrange(desc(n))
-
-top_20_negative_company <- head(negative_company,20)
-```
-<img width="555" alt="Top 20 companies with negative customer complaints" src="https://github.com/QDZ03/Data332/assets/159860533/7d0a52be-3ab9-4803-a673-385a2aff4b27">
-
-- Most negative complaints are in big companies such as Equifax, Wells Fargo, and Bank of America, with over 20000 negative words.
-
-### 2. Top 10 most negative words 
-
-<p>To clearly understand why customers were having complaints about these companies, we need to look for keywords that appear the most in those complaints. </p>
-
-<p>To look for negative words, I use "nrc" sentiment to identify and precisely count the number of words. </p>
+<p> To do this, I create a density with the x-axis as MPH, the y-axis as density, and the fill with the weather. </p>
 
 ```
-nrc_word_counts <- tidy_complaints %>%
-  inner_join(get_sentiments("nrc")) %>% 
-  filter(sentiment == "negative") %>%
-  count(word, sentiment, sort = TRUE) %>%
-  ungroup()
-nrc_word_counts
+# Check if the user selected "Density Plot of MPH by Weather"
+if (input$plot_type == "Density Plot of MPH by Weather") {
+      # Create a density plot of MPH by Weather
+      ggplot(df_cars, aes(x = MPH, fill = Weather)) +
+        geom_density(alpha = 0.5) + # Add density plot with transparency
+        labs(title = "Density Plot of MPH by Weather Condition",
+             x = "MPH", y = "Density", fill = "Weather") +
+        theme_minimal()
+    }
 ```
-<img width="555" alt="Top 10 negative words from customer complaints" src="https://github.com/QDZ03/Data332/assets/159860533/1f52cc55-5536-4777-b2a7-0dc035855c3b">
+<img width="556" alt="Density plot of MPH by Weather Condition" src="https://github.com/QDZ03/Data332/assets/159860533/1939e3c5-5f1d-41d8-a09b-17a412770d43">
 
-- Most people have complaints about late debt or payment, dispute calls, and fraud when complaining with those companies.
+- The density is highest at about 32 MPH in sunny weather and 28 MPH in cloudy weather.
+- This means drivers tend to drive faster in good weather and slower in bad weather. 
 
-### 3. Word bubble of negative complaints
+### 2. Relationship between Car's Speed and Time 
 
-<p>After knowing negative complaints from customers, I can show a big picture of more negative words.</p>
+<p>Knowing the relationship between a Car's Speed and Weather, we need to understand if Time affects the car's speed </p>
 
-<p>I will use the word bubble of "nrc" negative sentiment and see the top 100 words.</p>
+<p>To show the relationship of all three categories simultaneously, I create a box plot with the x-axis as Time, y-axis as MPH, and fill with Weather. </p>
 
 ```
-tidy_complaints %>%
-  inner_join(get_sentiments("nrc")) %>%
-  filter(sentiment == "negative") %>%
-  count(word, sentiment) %>%
-  with(wordcloud(word, n, max.words = 100))
+# Check if the user selected "Boxplot of MPH by Hour"
+    else if (input$plot_type == "Boxplot of MPH by Hour") {
+      # Create a boxplot of MPH by Hour with weather grouping
+      ggplot(df_cars, aes(x = as.factor(Hour), y = MPH)) +
+        geom_boxplot(aes(fill = Weather)) + # Add boxplot with weather grouping   
+        stat_summary(fun = mean, geom = "point", shape = 23, size = 4, color = "black") + # Add mean points
+        stat_summary(fun = mean, geom = "text", aes(label = round(after_stat(y), digits = 2)), vjust = -1) + # Add mean text label
+        stat_summary(fun = median, geom = "text", aes(label = round(after_stat(y), digits = 2)), vjust = 1.5, color = "blue") + # Add median text label
+        labs(title = "Boxplot of MPH by Hour",
+             x = "Hour", y = "MPH", fill = "Weather") +
+        theme_minimal() +
+        scale_x_discrete(labels = function(x) paste0(x, ":00"))
+    }
 ```
-<img width="555" alt="Complaints word bubble" src="https://github.com/QDZ03/Data332/assets/159860533/424d73bd-4b6e-435f-ba83-ddd849175ac5">
+<img width="556" alt="Boxplot of MPH by Hour" src="https://github.com/QDZ03/Data332/assets/159860533/e67768da-2b0c-4095-ac78-52a7d6b62c47">
+- We can see that there is not much difference in the speed on a sunny day, as their median is around 32 MPH.
+- This is reasonable because both of the data collected in casual time when is not rush or deserted hours 
+- With the 30 MPH speed limit, this is a success for radar detectors.
 
 # Conclusion
-
-1. With this data, customers can realize that big companies have lots of problems, and they can shift to big companies with low negative comments.
-2. Companies with high negative complaints should consider and fix their problems in time.   
+1. Since the data is limited, we cannot fully conclude the effect of the radar detector.
+2. However, the radar detector still helps drivers be more aware of their driving speed in different kinds of weather.
 
 
 
