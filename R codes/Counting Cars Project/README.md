@@ -5,6 +5,14 @@
  ## Introduction
  <p>I will analyze the cars' speed in different weather and times of the day to see their relationship. </p>
 
+## Data Dictionary
+### Main Columns
+<p>Date: The date we collect data</p>
+<p>MPH: The speed of the car collected from the radar detector</p>
+<p>Time: The time of the day</p>
+<p>Temp: The temperature of each date</p>
+<p>Weather: The weather of each date</p>
+
  ## Install Packages and Library
 ```
 library(shiny)
