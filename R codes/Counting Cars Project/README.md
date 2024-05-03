@@ -108,6 +108,6 @@ if (input$plot_type == "Density Plot of MPH by Weather") {
 1. Since the data is limited, we cannot fully conclude the effect of the radar detector.
 2. However, the radar detector still helps drivers be more aware of their driving speed in different kinds of weather.
 
-![image](https://github.com/QDZ03/Data332/assets/159860533/cae55adc-5fa0-4a6c-b58d-54a946c51eba)
+
 
 
