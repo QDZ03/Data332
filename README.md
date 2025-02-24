@@ -1,1 +1,1 @@
-This my Data 322 class project
+These are my classwork and projects for the DATA-332 class
